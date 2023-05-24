@@ -105,15 +105,27 @@ class Extraction():
                 file.writelines(lines)
 
         except KeyError:
-            pass
+            frame_no = filepath.split("labels_")[-1]
+            frame_no = frame_no.replace(".csv", "_new.txt")
+            # print(frame_no, filepath)
+            with open(f"{dest_path}/{frame_no}", "w") as file:     
+                file.write("")
+
 
 
 
 
 if __name__ == "__main__":
     testing = Extraction()
-    testing.obtain_files(r"C:\Users\DSO\Downloads\Spectrogram\spectrogram_training_data_20221006\merged_packets\bw_25e6")
-    for i in testing.paths:
-        testing.extract(i, r"C:\Users\DSO\Downloads\Spectrogram\test")
+    for j in ["25", "45", "60", "125"]:
+        testing.obtain_files(r"C:\Users\DSO\Downloads\Spectrogram\spectrogram_training_data_20221006\merged_packets\bw_" + j +"e6")
+        for i in testing.paths:
+            testing.extract(i, r"C:\Users\DSO\Downloads\Spectrogram\test")
+
+    # with open(r"C:\Users\DSO\Downloads\Spectrogram\label_key.txt", "w") as file:
+    #     dict = testing.obtain_classes()
+    #     for key, value in dict.items():
+    #         line = str(value) + ": " + str(key) + "\n"
+    #         file.write(line)
 
     # testing.extract(r"C:\Users\DSO\Downloads\Spectrogram\spectrogram_training_data_20221006\merged_packets\bw_25e6\labels_138847877310877880_bw_25E+6.csv", r"C:\Users\DSO\Downloads\Spectrogram\test")
