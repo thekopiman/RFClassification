@@ -23,6 +23,7 @@ class Scaling:
         self.slice_info = None  # (Number of blocks, excess)
         self.labels_path = None  # Stores the current label wrt to the img
         self.labels_data = None  # List of dataframes corresponding to new labels data
+        self.block_count = None # Correspond to slice_info
 
         self.obtain_info()
 
@@ -48,6 +49,8 @@ class Scaling:
             math.floor(self.dimensions[1] / self.dimensions[0]),
             self.dimensions[1] % self.dimensions[0],
         )
+        
+        self.block_count = self.slice_info[0] + int(self.slice_info[1] != 0)
 
         self.labels_path = glob.glob(f"{self.labels_dir}\*{self.frame_no}.txt")[0]
 
@@ -91,7 +94,8 @@ class Scaling:
         Output: None
         """
         if images == None:
-            images = self.new_images
+            images = 
+            
         if dir == None:
             raise IsADirectoryError("Put a imges_new folder dir path here")
         for i in range(len(images)):
@@ -128,7 +132,7 @@ class Scaling:
 
         # Initialization
         data = []
-        for i in range(len(self.new_images)):
+        for i in range(self.block_count):
             data.append({"label": [], "x": [], "y": [], "w": [], "h": []})
 
         with open(path, "r") as r:
@@ -140,7 +144,7 @@ class Scaling:
                 x_end = float(x) + w / 2
                 h = float(h)
 
-                number_of_blocks = len(self.new_images)
+                number_of_blocks = self.block_count
                 for index in range(number_of_blocks):
                     x_start_new, x_end_new = self.check_inside(
                         x_start=x_start,
