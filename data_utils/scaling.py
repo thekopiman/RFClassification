@@ -94,7 +94,7 @@ class Scaling:
         Output: None
         """
         if images == None:
-            images = 
+            images = self.new_images
             
         if dir == None:
             raise IsADirectoryError("Put a imges_new folder dir path here")
