@@ -1,8 +1,9 @@
 import os
 import csv 
-import numpy as np
-import pandas as pd
-import glob
+# import numpy as np
+# import pandas as pd
+# import glob
+import re
 
 class Extraction():
     def __init__(self) -> None:
@@ -15,16 +16,19 @@ class Extraction():
         return self.paths
 
     def wlan_create(self) -> dict:
-        rf_std = ["WAC", "WN", "WBG", "WPJ", "WAG"]
+        rf_std = ["WAC", "WN", "WBG"]
         mcs = ["0", "1" , "2", "3", "7"]
         lan_dict = {}
         counter = 0
         for i in range(len(rf_std)):
             for j in range(len(mcs)):
                 label = "WLAN_" + rf_std[i] + "_" + mcs[j]
-                lan_dict.update({label: counter})
-                counter += 1
-        
+                if label == "WLAN_WAC_2" or label == "WLAN_WAC_0":
+                    continue
+                else:
+                    lan_dict.update({label: counter})
+                    counter += 1
+            
         return lan_dict
 
     def bt_create(self) -> dict:
@@ -33,8 +37,8 @@ class Extraction():
 
         returns a dictionary
         '''
-        classtype = ['BT_classic', 'BLE_2MHz', 'BLE_1MHz']
-        packetype = ["DATA", "ADH5", "AIND", "AEDH5", "DH5"]
+        classtype = ['BT_classic']
+        packetype = ["ADH5", "AEDH5", "DH5"]
         bt_dict = {}
         counter = 0
 
@@ -43,7 +47,12 @@ class Extraction():
                 label = classtype[i] + "_" + packetype[j]
                 bt_dict.update({label: counter})
                 counter += 1
-        
+
+        bt_dict.update({"BLE_2MHz_DATA": counter})
+        counter += 1
+        bt_dict.update({"BLE_1MHz_DATA": counter})
+        counter += 1
+        bt_dict.update({"BLE_1MHz_AIND": counter})
         return bt_dict
     
     def obtain_classes(self, path = None) -> dict:
@@ -110,6 +119,37 @@ class Extraction():
             # print(frame_no, filepath)
             with open(f"{dest_path}/{frame_no}", "w") as file:     
                 file.write("")
+    
+    def label_changer(self, filepath):
+        with open(filepath, "r") as file: 
+            lines = file.readlines()
+        
+        for i in range(len(lines)):
+            match = re.search(r'\d+', lines[i])
+            num = int(match.group())
+            print(num)
+            if num == 1:
+                num -= 1
+            elif num > 1 and num < 15:
+                num = num - 2
+            elif num == 26:
+                num = num - 13
+            elif num == 27 or num == 28 or num == 30:
+                num = num - 14
+            elif num == 35:
+                num = num - 18
+            else:
+                num = num - 19
+            print("new", num)
+            num = str(num)
+            pos = len(num)
+            label = lines[i][pos:]
+            label = num + label
+            lines[i] = label
+        
+        with open(filepath, "w") as file: 
+            file.writelines(lines)
+
 
 
 
@@ -117,10 +157,10 @@ class Extraction():
 
 if __name__ == "__main__":
     testing = Extraction()
-    for j in ["25", "45", "60", "125"]:
-        testing.obtain_files(r"C:\Users\DSO\Downloads\Spectrogram\spectrogram_training_data_20221006\merged_packets\bw_" + j +"e6")
-        for i in testing.paths:
-            testing.extract(i, r"C:\Users\DSO\Downloads\Spectrogram\test")
+    # for j in ["25", "45", "60", "125"]:
+    #     testing.obtain_files(r"C:\Users\DSO\Downloads\Spectrogram\spectrogram_training_data_20221006\merged_packets\bw_" + j +"e6")
+    #     for i in testing.paths:
+    #         testing.extract(i, r"C:\Users\DSO\Downloads\Spectrogram\test")
 
     # with open(r"C:\Users\DSO\Downloads\Spectrogram\label_key.txt", "w") as file:
     #     dict = testing.obtain_classes()
@@ -129,3 +169,11 @@ if __name__ == "__main__":
     #         file.write(line)
 
     # testing.extract(r"C:\Users\DSO\Downloads\Spectrogram\spectrogram_training_data_20221006\merged_packets\bw_25e6\labels_138847877310877880_bw_25E+6.csv", r"C:\Users\DSO\Downloads\Spectrogram\test")
+
+    # dict = testing.obtain_classes()
+    # for key, value in dict.items():
+    #     print(key, ":", value)
+
+    testing.label_changer(r"C:\JZ\deepsig\testfile.txt")
+    
+
