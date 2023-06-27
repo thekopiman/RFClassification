@@ -1,18 +1,18 @@
 import os
 import csv 
-# import numpy as np
-# import pandas as pd
-# import glob
+import numpy as np
+import pandas as pd
+import glob
 import re
 
 class Extraction():
-    def __init__(self) -> None:
+    def __init__(self, path = None) -> None:
         self.classes = None
         self.paths = None
-        self.obtain_classes(path = None) # Add the new function next time
+        self.obtain_classes(path = path) # Add the new function next time
 
-    def obtain_files(self, path, type = 'csv') -> None:
-        self.paths = glob.glob(f'{path}\*.{type}')
+    def obtain_files(self, path, file_type = 'csv') -> None:
+        self.paths = glob.glob(f'{path}/*.{file_type}')
         return self.paths
 
     def wlan_create(self) -> dict:
@@ -59,28 +59,55 @@ class Extraction():
         '''
         Reads from yaml file if possible
         or else will create the classes on the fly
+        
+        example path = "/home/jovyan/yolov5/transfer_learning/spectrogram_v2.yaml"
 
         returns a dictionary
         '''
         if self.classes != None:
             return self.classes
         else:
-            lan_dict = self.wlan_create()
-            bt_dict = self.bt_create()
-            for key in bt_dict:
-                bt_dict[key] += len(lan_dict)
-            
+            try:
+                if path != None:
+                    import yaml
+                    with open(path, "r") as stream:
+                        try:
+                            classes = yaml.safe_load(stream)['names']
+                        except yaml.YAMLError as exc:
+                            print(exc)
 
-            lan_dict.update(bt_dict)
-            self.classes = lan_dict
-            return self.classes
+                    inv_map = {v: k for k, v in classes.items()}
+                    self.classes = inv_map
+                    return self.classes
+            except Exception:
+                lan_dict = self.wlan_create()
+                bt_dict = self.bt_create()
+                for key in bt_dict:
+                    bt_dict[key] += len(lan_dict)
+
+
+                lan_dict.update(bt_dict)
+                self.classes = lan_dict
+                return self.classes
         
-    def extract(self, filepath, dest_path):
+    def extract(self, filepath, dest_path, txt_file_path , add_new = True, add_result_frame = False) -> None:
+        '''
+        The main function for the whole extraction
+        
+        filepath = filepath of the csv file that contains all the extra information
+        dest_path = output folder for the new files
+        txt_file_path = folder name of the txt file
+        add_new = boolean for addeding the word "new" to the end of the label name
+        add_result_frame = boolean for addeding the word "result_frame" to the start of the label name
+
+        
+        output: None
+        '''
         df = pd.read_csv(filepath)
         try:
             frameNo = df["identifier"][0]
             identifier = "result_frame_" + str(frameNo) + ".txt"
-            resultfile = os.path.join(r"C:\Users\DSO\Downloads\Spectrogram\spectrogram_training_data_20221006\results results", identifier)
+            resultfile = os.path.join(txt_file_path, identifier)
 
             #remove collision 
             index = []
@@ -109,18 +136,31 @@ class Extraction():
 
                     label = str(key) + label
                     lines[index] = label
-
-            with open(f"{dest_path}/{frameNo}_new.txt", "w") as file:     
+            
+            header = "result_frame_" if add_result_frame else ""
+            tail = "_new" if add_new else ""
+            
+            with open(f"{dest_path}/{header}{frameNo}{tail}.txt", "w") as file:     
                 file.writelines(lines)
 
-        except KeyError:
+
+        except (KeyError, IndexError) as error:
             frame_no = filepath.split("labels_")[-1]
             frame_no = frame_no.replace(".csv", "_new.txt")
             # print(frame_no, filepath)
-            with open(f"{dest_path}/{frame_no}", "w") as file:     
+            
+            
+            header = "result_frame_" if add_result_frame else ""
+            tail = "_new" if add_new else ""
+            
+            with open(f"{dest_path}/{header}{frame_no}{tail}.txt", "w") as file:     
                 file.write("")
+            # print(error)
     
     def label_changer(self, filepath):
+        '''
+        Consider this as deprecated
+        '''
         with open(filepath, "r") as file: 
             lines = file.readlines()
         
