@@ -1,0 +1,6 @@
+dataset: custom
+data_path: sample_signals
+
+order:
+  - [0, 2, 3, 4, 8, 9, 10, 13, 14, 16, 15, 17, 6, 11, 7, 12, 1, 5]
+seed: [1]
