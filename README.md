@@ -80,6 +80,10 @@ Considering a 10-2-2-2-2 split for the dataset of 18 signals, the results are as
 
 ![AFC Results](readmeimages/afc_image.png)
 
+|       | initial_10 | step_12 | step_14 | step_16 | step_18 |
+| ----- | ---------- | ------- | ------- | ------- | ------- |
+| total | 0.733      | 0.733   | 0.667   | 0.614   | 0.593   |
+
 Keep in mind that the results are saved in a .json file. So use `AFC/results_analysis.ipynb` to generate the graphs.
 
 # References
