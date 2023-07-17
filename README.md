@@ -76,7 +76,7 @@ However, you may add in `save-model` and `dump-predictions` as well.
 
 Considering a 10-2-2-2-2 split for the dataset of 18 signals, the results are as follow:
 
-![AFC Results](readmeimages\afc_image.png)
+![AFC Results](readmeimages/afc_image.png)
 
 Keep in mind that the results are saved in a .json file. So use `AFC/results_analysis.ipynb` to generate the graphs.
 
