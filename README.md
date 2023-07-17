@@ -7,6 +7,8 @@ This github repo used 2 methods to classify signals from spectrograms.
 
 You may request the models (.pt/.pth files), documentations and reports from me at kokchinyi01@gmail.com.
 
+Note: You may ignore `data_utils` (not updated) and `extra` within this repo.
+
 ## Dataset
 
 The Dataset I used is from [Spectrogram Data Set for Deep-Learning-Based RF Frame Detection](https://www.mdpi.com/2306-5729/7/12/168). Click here to download the [dataset](https://fordatis.fraunhofer.de/handle/fordatis/287) [80 gb]. You may also download it using this command (Linux).
