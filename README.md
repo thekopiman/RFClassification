@@ -17,10 +17,18 @@ The Dataset I used is from [Spectrogram Data Set for Deep-Learning-Based RF Fram
 $ wget https://fordatis.fraunhofer.de/bitstream/fordatis/287/1/spectrogram_training_data_20220711.zip
 ```
 
-### Dataset Structure (KIV)
+### Dataset Structure 
 
-- ??
-  - ?
+- merged_data
+  - bw_125e6
+    - *.npy (the format of the file is in npy even if there isn't any file type) **Data is in IQ format**
+    - *.csv (contains extra information of each individual frame)
+  - bw_25e6/bw_45e6/bw_60e6
+- results
+  - *_marked.png (boxed images)
+  - *.png (unboxed images)
+  - *.txt (labels for each signals)
+ 
 
 Keep in mind that this dataset only label the signals into WLAN, Collision and BT. Please use the necessary steps below to extract out the 18 different signals from the csv files and labels.
 
