@@ -43,7 +43,15 @@ The 18 different signals are:
 
 ### Steps to extract
 
-KIV
+Using the `extract.py` module in `yolov5/data_utils`, execute the following commands:
+
+```
+$ python extract.py --mode classes18 --yaml <yaml path> --data <path of the 80gb spectrogram file> --dest <destination of results> --duplicate-imgs <Boolean> 
+```
+Refer to documentations for more settings/params.
+
+
+
 
 # YOLOv5
 
@@ -51,6 +59,7 @@ This is a transfer learning model from the main [YOLOv5 model](https://github.co
 
 Note: The yolov5 folder in this repo contains other functions used to train this custom dataset. Please use the YOLOv5 given in this repo.
 
+With reference to creating the custom dataset for 
 **KIV**
 
 The results for the **sliced** dataset is below.
