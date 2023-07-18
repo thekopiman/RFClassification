@@ -82,7 +82,7 @@ def get_parser():
                         default="never",
                         help="Save the network, either the `last` one or"
                              " each `task`'s ones.")
-    parser.add_argument("--dump-predictions", default=False, action="store_true",
+    parser.add_argument("--dump-predictions", default=False, type = lambda x: (str(x).lower() == 'true'),
                         help="Dump the predictions and their ground-truth on disk.")
     parser.add_argument("-log", "--logging", choices=["critical", "warning", "info", "debug"],
                         default="info", help="Logging level")
