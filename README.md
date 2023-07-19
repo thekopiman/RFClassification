@@ -49,7 +49,7 @@ Using the `extract.py` module in `yolov5/data_utils`, execute the following comm
 ```
 $ python extract.py --mode classes18 --yaml <yaml path> --data <path of the 80gb spectrogram file> --dest <destination of results> --duplicate-imgs <Refer to Step 2> 
 ```
-Refer to documentations for more settings/params. (Ref to Docs for Scaling/Slicing of imgs)
+Refer to documentations for more settings/params. 
 
 **Step 2** (Recommandation for YOLOv5):\
 For YOLOv5 to work, ensure that the Dataset is in this format, (the folders need to be named images and labels)
@@ -63,13 +63,20 @@ Note: You may bypass this step if you indicated `--duplicate-imgs` in step 1. Al
 ```
 $ python extract.py --mode false --duplicate-imgs <path of labels> --data <path of the 80gb spectrogram file>
 ```
+**Step 3** (For YOLOv5):\
+This step will aim to slice/scale the imgs to an aspect ratio of 1:1 by cutting them up. The require module is `scaling.py` in `yolov5/data_utils`.
 
-**Step 3** (For AFC):\
+```
+KIV
+```
+
+
+**Step 4** (For AFC):\
 This step will aim to extract out all the signals imgs from the frames. The outcome is a directory as seen below: 
 - dataset
   - WLAN_WAC_1
   - ...
-  - BLE_1MHz_AIND
+  - BLE_1MHz_AIND\
 The sub-directories of dataset will be automatically generated, `dest` is `dataset` in this case.
 
 ```
@@ -89,8 +96,9 @@ This is a transfer learning model from the main [YOLOv5 model](https://github.co
 Note: The yolov5 folder in this repo contains other functions used to train this custom dataset. Please use the YOLOv5 given in this repo.
 
 The training process is detailed below:
-```
 
+```
+KIV
 ```
 
 The results for the **sliced** dataset is below.
@@ -112,7 +120,7 @@ AFC model is a **CLASSIFICATION** model. [Repo link](https://github.com/kminsoo/
 
 Note: The AFC folder in this repo contains other functions used to train this **custom** dataset such as auto scaling of images to 224x224. Please use the AFC given in this repo.
 
-It is necessary to extract the signals images out from each frame. The steps are mentioned in **Steps to extract** (step 3).
+It is necessary to extract the signals images out from each frame. The steps are mentioned in **Steps to extract** (step 4).
 
 
 To train the model, you may use this:
