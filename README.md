@@ -1,5 +1,7 @@
 # RF Classification
 
+Version: 1.0 (Only Linux is supported)
+
 This github repo used 2 methods to classify signals from spectrograms.
 
 - YOLOv5
@@ -11,10 +13,15 @@ Note: You may ignore `data_utils` (not updated) and `extra` within this repo.
 
 ## Dataset
 
-The Dataset I used is from [Spectrogram Data Set for Deep-Learning-Based RF Frame Detection](https://www.mdpi.com/2306-5729/7/12/168). Click here to download the [dataset](https://fordatis.fraunhofer.de/handle/fordatis/287) [80 gb]. You may also download it using this command (Linux).
+The Dataset I used is from [Spectrogram Data Set for Deep-Learning-Based RF Frame Detection](https://www.mdpi.com/2306-5729/7/12/168). Click here to download the [dataset](https://fordatis.fraunhofer.de/handle/fordatis/287) [80 gb]. You may also download it using this command (Linux). The bandwidth from the client server is quite low (<10mbps), so it will take hours (4-8hrs) to complete the download. Recommanded to download overnight.
 
 ```bash
 $ wget https://fordatis.fraunhofer.de/bitstream/fordatis/287/1/spectrogram_training_data_20220711.zip
+```
+
+Remember to unzip using the command below
+```bash
+$ unzip spectrogram_training_data_20221006.zip
 ```
 
 ### Dataset Structure 
