@@ -54,7 +54,7 @@ Using the `extract.py` module in `yolov5/data_utils`, execute the following comm
 
 **Step 1**:
 ```
-$ python extract.py --mode classes18 --yaml <yaml path> --data <path of the 80gb spectrogram file> --dest <destination of results> --duplicate-imgs <Refer to Step 2> 
+$ python extract.py --mode classes18 --yaml <yaml path> --data <path of the 80gb spectrogram folder> --dest <destination of results> --duplicate-imgs <Refer to Step 2> 
 ```
 Refer to documentations for more settings/params. 
 
@@ -68,7 +68,7 @@ Since step 1 have extracted the labels into the `dest`/`labels` folder already, 
 
 Note: You may bypass this step if you indicated `--duplicate-imgs` in step 1. Also ensure that you set `--mode` to false (Defaults to false) to make sure that classes18/getsignals don't run.
 ```
-$ python extract.py --mode false --duplicate-imgs <path of labels> --data <path of the 80gb spectrogram file>
+$ python extract.py --mode false --duplicate-imgs <path of labels> --data <path of the 80gb spectrogram folder>
 ```
 **Step 3** (For YOLOv5):\
 This step will aim to slice/scale the imgs to an aspect ratio of 1:1 by cutting them up. The require module is `scaling.py` in `yolov5/data_utils`.
@@ -93,11 +93,6 @@ $ python extract.py --mode getsignals --yaml <yaml path> --dest <destination of 
 ```
 
 
- 
-
-
-
-
 # YOLOv5
 
 This is a transfer learning model from the main [YOLOv5 model](https://github.com/ultralytics/yolov5). You may also visit [link](https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data) for more information in creating your own dataset for YOLOv5. I will only outline the steps I did for my dataset.
@@ -115,11 +110,12 @@ The results for the **sliced** dataset is below.
 ![confusion matrix](readmeimages/confusion_matrix.png)
 ![PR Curve](readmeimages/PR_curve.png)
 
-To accomodate slice and no slice function, I have accomodated a function for this. This is a parser argument as seen below.
-
+To accomodate slice and no slice function, I have accomodated a function for this. This is a parser argument as seen below.\
+This `detection.py` can be found in `yolov5`.
 ```
-$ python detection.py
+$ python detection.py --yaml <yaml path> --data <src directory> --model-path <model path> --slice <boolean> --dest <dest directory>
 ```
+Note: There's a bug, so use the correct corresponding yaml file wrt the model path.
 
 KIV
 
