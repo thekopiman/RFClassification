@@ -53,7 +53,7 @@ Refer to documentations for more settings/params.
 
 **Step 2** (Recommandation for YOLOv5):\
 For YOLOv5 to work, ensure that the Dataset is in this format, (the folders need to be named images and labels)
-- dataset
+- *dataset*
   - images
   - labels
  
@@ -66,8 +66,10 @@ $ python extract.py --mode false --duplicate-imgs <path of labels> --data <path 
 **Step 3** (For YOLOv5):\
 This step will aim to slice/scale the imgs to an aspect ratio of 1:1 by cutting them up. The require module is `scaling.py` in `yolov5/data_utils`.
 
+`src` is the *dataset* path in step 2.
+`dest` is the **dataset** destination.
 ```
-KIV
+$ python scaling.py --src <dataset src> --dest <dataset dest>
 ```
 
 
