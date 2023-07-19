@@ -45,10 +45,37 @@ The 18 different signals are:
 
 Using the `extract.py` module in `yolov5/data_utils`, execute the following commands:
 
+**Step 1**:
 ```
 $ python extract.py --mode classes18 --yaml <yaml path> --data <path of the 80gb spectrogram file> --dest <destination of results> --duplicate-imgs <Boolean> 
 ```
-Refer to documentations for more settings/params.
+Refer to documentations for more settings/params. (Ref to Docs for Scaling/Slicing of imgs)
+
+**Step 2** (Recommandation for YOLOv5):\
+For YOLOv5 to work, ensure that the Dataset is in this format, (the folders need to be named images and labels)
+- dataset
+  - images
+  - labels
+ 
+Since step 1 have extracted the labels into the `dest`/`labels` folder already, step 2 will aim to copy all the files from the `data` path to `images`
+```
+$ python extract.py --mode false --duplicate-imgs <path of labels> --data <path of the 80gb spectrogram file>
+```
+
+**Step 3** (For AFC):\
+This step will aim to extract out all the signals imgs from the frames. The outcome is a directory as seen below: 
+- dataset
+  - WLAN_WAC_1
+  - ...
+  - BLE_1MHz_AIND
+The sub-directories of dataset will be automatically generated, `dest` is `dataset` in this case.
+
+```
+$ python extract.py --mode getsignals --yaml <yaml path> --dest <destination of results, ie the dataset> --imgs-path <path of the images seen in step 2> --labels-path <path of the labels seen in step 2>
+```
+
+
+ 
 
 
 
@@ -59,8 +86,10 @@ This is a transfer learning model from the main [YOLOv5 model](https://github.co
 
 Note: The yolov5 folder in this repo contains other functions used to train this custom dataset. Please use the YOLOv5 given in this repo.
 
-With reference to creating the custom dataset for 
-**KIV**
+The training process is detailed below:
+```
+
+```
 
 The results for the **sliced** dataset is below.
 
@@ -81,9 +110,8 @@ AFC model is a **CLASSIFICATION** model. [Repo link](https://github.com/kminsoo/
 
 Note: The AFC folder in this repo contains other functions used to train this **custom** dataset such as auto scaling of images to 224x224. Please use the AFC given in this repo.
 
-It is necessary to extract the signals images out from each frame. The steps are detailed as below.
+It is necessary to extract the signals images out from each frame. The steps are mentioned in **Steps to extract** (step 3).
 
-KIV
 
 To train the model, you may use this:
 
