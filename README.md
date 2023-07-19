@@ -47,7 +47,7 @@ Using the `extract.py` module in `yolov5/data_utils`, execute the following comm
 
 **Step 1**:
 ```
-$ python extract.py --mode classes18 --yaml <yaml path> --data <path of the 80gb spectrogram file> --dest <destination of results> --duplicate-imgs <Boolean> 
+$ python extract.py --mode classes18 --yaml <yaml path> --data <path of the 80gb spectrogram file> --dest <destination of results> --duplicate-imgs <Refer to Step 2> 
 ```
 Refer to documentations for more settings/params. (Ref to Docs for Scaling/Slicing of imgs)
 
@@ -58,6 +58,8 @@ For YOLOv5 to work, ensure that the Dataset is in this format, (the folders need
   - labels
  
 Since step 1 have extracted the labels into the `dest`/`labels` folder already, step 2 will aim to copy all the files from the `data` path to `images`
+
+Note: You may bypass this step if you indicated `--duplicate-imgs` in step 1. Also ensure that you set `--mode` to false (Defaults to false) to make sure that classes18/getsignals don't run.
 ```
 $ python extract.py --mode false --duplicate-imgs <path of labels> --data <path of the 80gb spectrogram file>
 ```
