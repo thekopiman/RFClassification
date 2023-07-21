@@ -1,0 +1,10 @@
+path: /home/jovyan/spectrogram_training_data_20221006  # dataset root dir
+train: yaml/train_list_v0.txt  # train images (relative to 'path') 14000 images
+val: yaml/val_list_v0.txt  # val images (relative to 'path') 4000 images
+test: yaml/test_list_v0.txt  # test image (relative to 'path') 2000 images
+
+# Classes
+names:
+  0: WLAN
+  1: Collision
+  2: Bluetooth

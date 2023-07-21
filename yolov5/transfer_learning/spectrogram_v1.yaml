@@ -1,0 +1,47 @@
+path: /home/jovyan/spectrogram_training_data_20221006  # dataset root dir
+train: yaml/train_list_v1.txt  # train images (relative to 'path') 84830 images
+val: yaml/val_list_v1.txt  # val images (relative to 'path') 24237 images
+test: yaml/test_list_v1.txt  # test image (relative to 'path') 12120 images
+
+# Classes
+names:
+    0: WLAN_WAC_0
+    1: WLAN_WAC_1
+    2: WLAN_WAC_2
+    3: WLAN_WAC_3
+    4: WLAN_WAC_7
+    5: WLAN_WN_0
+    6: WLAN_WN_1
+    7: WLAN_WN_2
+    8: WLAN_WN_3
+    9: WLAN_WN_7
+    10: WLAN_WBG_0
+    11: WLAN_WBG_1
+    12: WLAN_WBG_2
+    13: WLAN_WBG_3
+    14: WLAN_WBG_7
+    15: WLAN_WPJ_0
+    16: WLAN_WPJ_1
+    17: WLAN_WPJ_2
+    18: WLAN_WPJ_3
+    19: WLAN_WPJ_7
+    20: WLAN_WAG_0
+    21: WLAN_WAG_1
+    22: WLAN_WAG_2
+    23: WLAN_WAG_3
+    24: WLAN_WAG_7
+    25: BT_classic_DATA
+    26: BT_classic_ADH5
+    27: BT_classic_AIND
+    28: BT_classic_AEDH5
+    29: BT_classic_DH5
+    30: BLE_2MHz_DATA
+    31: BLE_2MHz_ADH5
+    32: BLE_2MHz_AIND
+    33: BLE_2MHz_AEDH5
+    34: BLE_2MHz_DH5
+    35: BLE_1MHz_DATA
+    36: BLE_1MHz_ADH5
+    37: BLE_1MHz_AIND
+    38: BLE_1MHz_AEDH5
+    39: BLE_1MHz_DH5
