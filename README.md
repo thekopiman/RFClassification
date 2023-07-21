@@ -97,6 +97,10 @@ The sub-directories of dataset will be automatically generated, `dest` is `datas
 $ python extract.py --mode getsignals --yaml <yaml path> --dest <destination of results, ie the dataset> --imgs-path <path of the images seen in step 2> --labels-path <path of the labels seen in step 2>
 ```
 
+**Step 4 (Sample)** - Replce the "??" with the actual paths.
+'''
+python extract.py --mode getsignals --yaml ??/spectrogram_v3.yaml --dest ??/dataset3 --imgs-path ??/dataset2/images --labels-path ??/dataset2/labels
+'''
 
 # YOLOv5
 
