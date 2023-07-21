@@ -56,6 +56,11 @@ Using the `extract.py` module in `yolov5/data_utils`, execute the following comm
 ```
 $ python extract.py --mode classes18 --yaml <yaml path> --data <path of the 80gb spectrogram folder> --dest <destination of results> --duplicate-imgs <Refer to Step 2> 
 ```
+
+**Step 1 (Sample)** - Replce the "??" with the actual paths.
+```
+$ python extract.py --mode classes18 --yaml ??/spectrogram_v3.yaml --data ??/spectrogram_training_data_20221006 --dest ??/spectrogram_training_data_20221006/dataset2/labels --duplicate-imgs ??/spectrogram_training_data_20221006/dataset2/images/
+```
 Refer to documentations for more settings/params. 
 
 **Step 2** (Recommandation for YOLOv5):\
