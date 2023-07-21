@@ -98,9 +98,9 @@ $ python extract.py --mode getsignals --yaml <yaml path> --dest <destination of 
 ```
 
 **Step 4 (Sample)** - Replce the "??" with the actual paths.
-'''
+```
 python extract.py --mode getsignals --yaml ??/spectrogram_v3.yaml --dest ??/dataset3 --imgs-path ??/dataset2/images --labels-path ??/dataset2/labels
-'''
+```
 
 # YOLOv5
 
