@@ -63,10 +63,10 @@ class Scaling:
 
 
         Args:
-            img (_type_, optional): _description_. Defaults to None.
+            img (np.array, optional): Slice the images into a list of imgs. Defaults to None.
 
         Returns:
-            list: _description_
+            list: list of imgs
         """
 
         if img == None:
@@ -325,9 +325,9 @@ def main(args: dict) -> None:
 
     print("----- Scaling/Slicing in progress -----")
 
-    length = len(glob.glob(img.img_dir + "/*.png"))
+    length = len(glob.glob(os.path.join(img.img_dir, "*.png")))
     percent10 = int(length / 10)
-    for idx, l in enumerate(glob.glob(img.img_dir + "/*.png")):
+    for idx, l in enumerate(glob.glob(os.path.join(img.img_dir, "*.png"))):
         if idx % percent10 == 0:
             print(f"-- Progress {idx/percent10}% --")
 
