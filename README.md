@@ -132,12 +132,31 @@ AFC model is a **CLASSIFICATION** model. [Repo link](https://github.com/kminsoo/
 Note: The AFC folder in this repo contains other functions used to train this **custom** dataset such as auto scaling of images to 224x224. Please use the AFC given in this repo.
 
 It is necessary to extract the signals images out from each frame. The steps are mentioned in **Steps to extract** (step 4).
+After extracting the signals out (eg. dataset1), you either copy or move that directory into the AFC directory. (Recommended)
 
+The tree structure of this directory should be:
+- AFC
+  - dataset1 (take from the steps above)
+  - custom_split (whatever name you want)
+  - inclearn
+  - options
+    - AFC
+      - AFC_cnn_custom18.yaml
+    - data
+      - custom_order_v1.yaml
+
+Afterwards, you will have to generate the train/val/test.txt files to put inside `custom_split`.
+You may find `generatefiles.py` at `AFC`.
+```
+$ python generatefiles.py --data <dataset1 path> --dest <custom_split path> --yaml <The yaml file path you used for YOLOv5>
+```
+
+KIV: Refer to docs for more information
 
 To train the model, you may use this:
 
 ```
-$ python -minclearn --options options/AFC/AFC_cnn_custom18.yaml options/data/custom18_order.yaml --initial-increment 10 --increment 2 --fixed-memory --memory-size 20000 --device 0 --label AFC_cnn_custom_10steps --data-path sample_signals --metadata-path custom_split
+$ python -minclearn --options options/AFC/AFC_cnn_custom18.yaml options/data/custom18_order.yaml --initial-increment 10 --increment 2 --fixed-memory --memory-size 20000 --device 0 --label AFC_cnn_custom_10steps --data-path <dataset1 path> --metadata-path custom_split
 ```
 
 However, you may add in `save-model` and `dump-predictions` as well.
