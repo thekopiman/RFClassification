@@ -1,6 +1,6 @@
 # RF Classification
 
-Version: 1.0 (Only Linux is supported)
+Version: 1.1
 
 This github repo used 2 methods to classify signals from spectrograms.
 
@@ -52,14 +52,15 @@ The 18 different signals are:
 
 Using the `extract.py` module in `yolov5/data_utils`, execute the following commands:
 
+**Step Auto**\
+Use this step to automate steps 1-3. Note that Step 4 is not executed, please execute it yourself.
+```
+$ python extract.py --mode auto --yaml <yaml path> --data <path of the 80gb spectrogram folder>
+```
+
 **Step 1**:
 ```
 $ python extract.py --mode classes18 --yaml <yaml path> --data <path of the 80gb spectrogram folder> --dest <destination of results> --duplicate-imgs <Refer to Step 2> 
-```
-
-**Step 1 (Sample)** - Replce the "??" with the actual paths.
-```
-$ python extract.py --mode classes18 --yaml ??/spectrogram_v3.yaml --data ??/spectrogram_training_data_20221006 --dest ??/spectrogram_training_data_20221006/dataset2/labels --duplicate-imgs ??/spectrogram_training_data_20221006/dataset2/images/
 ```
 Refer to documentations for more settings/params. 
 
@@ -75,17 +76,8 @@ Note: You may bypass this step if you indicated `--duplicate-imgs` in step 1. Al
 ```
 $ python extract.py --mode false --duplicate-imgs <path of labels> --data <path of the 80gb spectrogram folder>
 ```
-**Step 3** (For YOLOv5):\
-This step will aim to slice/scale the imgs to an aspect ratio of 1:1 by cutting them up. The require module is `scaling.py` in `yolov5/data_utils`.
 
-`src` is the *dataset* path in step 2.
-`dest` is the **dataset** destination.
-```
-$ python scaling.py --src <dataset src> --dest <dataset dest>
-```
-
-
-**Step 4** (For AFC):\
+**Step 3** (For AFC):\
 This step will aim to extract out all the signals imgs from the frames. The outcome is a directory as seen below: 
 - dataset
   - WLAN_WAC_1
@@ -97,10 +89,15 @@ The sub-directories of dataset will be automatically generated, `dest` is `datas
 $ python extract.py --mode getsignals --yaml <yaml path> --dest <destination of results, ie the dataset> --imgs-path <path of the images seen in step 2> --labels-path <path of the labels seen in step 2>
 ```
 
-**Step 4 (Sample)** - Replce the "??" with the actual paths.
+**Step 4** (For YOLOv5):\
+This step will aim to slice/scale the imgs to an aspect ratio of 1:1 by cutting them up. The require module is `scaling.py` in `yolov5/data_utils`.
+
+`src` is the *dataset* path in step 2. If you implement `auto`, then the dataset folder should be called `dataset0` (inside the spectrogram folder) with 2 subdirectories called images and labels.
+`dest` is the **dataset** destination. **Please create another empty directory (eg. dataset2) yourself**. Then this will be the path location. (This module will automatically generate `imgaes` and `labels` subdirectories)
 ```
-python extract.py --mode getsignals --yaml ??/spectrogram_v3.yaml --dest ??/dataset3 --imgs-path ??/dataset2/images --labels-path ??/dataset2/labels
+$ python scaling.py --src <dataset src> --dest <dataset dest>
 ```
+
 
 # YOLOv5
 
@@ -111,8 +108,10 @@ Note: The yolov5 folder in this repo contains other functions used to train this
 The training process is detailed below:
 
 ```
-KIV
+$ python yolov5/train.py --data <yaml path> --weights yolov5s.pt --epochs 50 --batch 4 --optimizer AdamW --device 0
 ```
+Please refer to the `spectrogram_v3.yaml` in this repo for a sample. Ensure that it contains the 18 classes and path/train/test/val paths. The train/test/val_list.txt have been generated if you used the `auto` mode in the aforementioned dataset steps mentioned above.
+
 
 The results for the **sliced** dataset is below.
 
@@ -124,9 +123,7 @@ This `detection.py` can be found in `yolov5`.
 ```
 $ python detection.py --yaml <yaml path> --data <src directory> --model-path <model path> --slice <boolean> --dest <dest directory>
 ```
-Note: There's a bug, so use the correct corresponding yaml file wrt the model path.
-
-KIV
+Note: Please refer to the docs for more information
 
 # AFC
 
